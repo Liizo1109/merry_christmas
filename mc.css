@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'mountains_of_christmasregular';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff2') format('woff2'),
+         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #151522;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+svg {
+    width: 90%;
+    height: 90%;
+    visibility: hidden;
+    display: block;
+    margin: auto;
+}
+
+.sparkle {
+    /* mix-blend-mode: luminosity; */
+}
+
+#endMessage {
+    font-family: 'mountains_of_christmasregular', Arial, sans-serif;
+    font-size: 2rem;
+    text-anchor: middle;
+    text-align: center;
+    fill: #FFFFFF;
+    color: #FFFFFF;
+    opacity: 0;
+    letter-spacing: 1px;
+    animation: fadeIn 2s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+a {
+    color: white;
+    text-decoration: underline dotted #FFFFFF;
+}
+
+a:visited {
+    color: red;
+}
