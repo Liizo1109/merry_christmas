@@ -1,85 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Merry Christmas</title>
+    <title>Interactive Christmas Tree</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
+            background-color: #0d0b2f;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: #111;
+            height: 100vh;
             overflow: hidden;
-            font-family: Arial, sans-serif;
         }
-
-        h1 {
-            color: white;
-            font-size: 3em;
-            position: absolute;
-            top: 10%;
-            text-shadow: 2px 2px 5px red;
-        }
-
         canvas {
-            position: absolute;
-        }
-
-        .snowflake {
-            position: absolute;
-            color: white;
-            font-size: 1em;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+            display: block;
         }
     </style>
 </head>
-
 <body>
-    <h1>Merry Christmas</h1>
+    <canvas id="treeCanvas"></canvas>
 
     <script>
-        // Generate snowflakes
-        const snowflakeCount = 100;
-        const body = document.body;
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
 
-        for (let i = 0; i < snowflakeCount; i++) {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerHTML = '&#10052;';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            const size = Math.random() * 2 + 1;
-            const left = Math.random() * 100;
-            const duration = Math.random() * 5 + 5;
+        function drawTree() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            snowflake.style.fontSize = `${size}em`;
-            snowflake.style.left = `${left}%`;
-            snowflake.style.animationDuration = `${duration}s`;
+            ctx.beginPath();
+            ctx.strokeStyle = '#d4a05a';
+            ctx.lineWidth = 3;
 
-            body.appendChild(snowflake);
+            // Base tree outline
+            ctx.moveTo(canvas.width / 2, canvas.height / 4);
+            ctx.lineTo(canvas.width / 2 - 100, canvas.height / 2);
+            ctx.lineTo(canvas.width / 2 + 100, canvas.height / 2);
+            ctx.closePath();
+            ctx.stroke();
 
-            // Remove snowflake after animation
-            snowflake.addEventListener('animationend', () => {
-                snowflake.remove();
-            });
+            // Spiral decoration
+            let x = canvas.width / 2;
+            let y = canvas.height / 4;
+            let angle = 0;
+            const radiusIncrement = 10;
+            const numTurns = 6;
+            const colors = ['#FF0000', '#00FF00', '#FFFFFF', '#FFD700'];
+
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            for (let i = 0; i < numTurns * 360; i += 10) {
+                const radius = i / 360 * radiusIncrement;
+                angle = (i * Math.PI) / 180;
+                const x1 = x + radius * Math.cos(angle);
+                const y1 = y + radius * Math.sin(angle);
+                ctx.strokeStyle = colors[Math.floor(i / 90) % colors.length];
+                ctx.lineTo(x1, y1);
+                ctx.moveTo(x1, y1);
+            }
+            ctx.stroke();
+
+            // Add twinkling stars
+            for (let i = 0; i < 50; i++) {
+                const starX = Math.random() * canvas.width;
+                const starY = Math.random() * canvas.height;
+                const size = Math.random() * 2;
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(starX, starY, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
+
+        drawTree();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawTree();
+        });
     </script>
 </body>
-
 </html>
