@@ -31,7 +31,7 @@ svg {
 }
 
 .sparkle {
-    /* Removed blend mode for compatibility */
+    /* mix-blend-mode: luminosity; */
 }
 
 #endMessage {
